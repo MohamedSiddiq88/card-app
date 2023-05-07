@@ -4,59 +4,73 @@ import './App.css';
 function App() {
   const data = [
     {
-     plan: "FREE",
+      plan: "FREE",
       price: 0,
       list: [
-        ['Single User', true],
-        ['5GB Storage', true],
-        ['Unlimited Public Projects', true],
-        ['Community Access', true],
-        ['Unlimited Private Projects', false],
-        ['Dedicated Phone Support', false],
-        ['Free Subdomain', false],
-        ['Monthly Status Reports', false]
+        { item: 'Single User', included: true },
+        { item: '5GB Storage', included: true },
+        { item: 'Unlimited Public Projects', included: true },
+        { item: 'Community Access', included: true },
+        { item: 'Unlimited Private Projects', included: false },
+        { item: 'Dedicated Phone Support', included: false },
+        { item: 'Free Subdomain', included: false },
+        { item: 'Monthly Status Reports', included: false }
       ]
     },
     {
       plan: "PLUS",
       price: 9,
       list: [
-        ['5 Users', true],
-        ['50GB Storage', true],
-        ['Unlimited Public Projects', true],
-        ['Community Access', true],
-        ['Unlimited Private Projects', true],
-        ['Dedicated Phone Support', true],
-        ['Free Subdomain', true],
-        ['Monthly Status Reports', false]
+        { item: '5 Users', included: true },
+        { item: '50GB Storage', included: true },
+        { item: 'Unlimited Public Projects', included: true },
+        { item: 'Community Access', included: true },
+        { item: 'Unlimited Private Projects', included: true },
+        { item: 'Dedicated Phone Support', included: true },
+        { item: 'Free Subdomain', included: true },
+        { item: 'Monthly Status Reports', included: false }
       ]
     },
     {
       plan: "PRO",
       price: 49,
-      list: [  ['Unlimited Users', true],
-      ['150GB Storage', true],
-      ['Unlimited Public Projects', true],
-      ['Community Access', true],
-      ['Unlimited Private Projects', true],
-      ['Dedicated Phone Support', true],
-      ['Unlimited Free Subdomains', true],
-      ['Monthly Status Reports', true]
-    ]
+      list: [
+        { item: 'Unlimited Users', included: true },
+        { item: '150GB Storage', included: true },
+        { item: 'Unlimited Public Projects', included: true },
+        { item: 'Community Access', included: true },
+        { item: 'Unlimited Private Projects', included: true },
+        { item: 'Dedicated Phone Support', included: true },
+        { item: 'Unlimited Free Subdomains', included: true },
+        { item: 'Monthly Status Reports', included: true }
+      ]
     }
   ];
-
   // data.map((value, index, accArr) => console.log(value, index, accArr))
   return (
-    <div className="App fluid-container">
-      {data.map((card, index) => (
-        <Profile
-          key={index}
-          plan={card.plan}
-          price={card.price}
-          list={card.list}
-        />
-      ))}
+    <div className="App">
+
+      <div className='container-fluid'>
+
+      <div className='row'>
+
+{/* divide into 3 column */}
+{data.map((card, index) => (
+  <div className='col-md-4'>
+    <Profile
+      key={index}
+      plan={card.plan}
+      price={card.price}
+      list={card.list}
+    />
+  </div>
+
+))}
+
+</div>
+
+      </div>
+
     </div>
   );
 }
@@ -65,25 +79,38 @@ export default App;
 
 // create a new component
 
-function Profile({ plan,price, list }) {
+function Profile({ plan, price, list }) {
   return (
-    <div className="col-md-4">
-      <div className="card">
+    <div className="card">
       <p className='plan'>{plan}</p>
       <span className="price">${price}<span className='permonth'>/month</span></span>
       <hr></hr>
+
+      {/* un-order list */}
       <ul>
-        {list.map((item, index,arr) => (
+
+        {/* list */}
+        {list.map((item, index) => (
           <li key={index}
-           style={{color: item[1] ? 'black' : 'grey'}}
-           >{item[1]?<i class="fa fa-check" aria-hidden="true"></i>
+
+          // change the color based on the condtion
+           style={{color: item.included ? 'black' : 'grey'}}>
+
+
+          {/* chage the icon based on the condtion */}
+          {item.included ? 
+          <i class="fa fa-check" aria-hidden="true"></i>
            :<i class="fa fa-times" aria-hidden="true"></i>
-          }  {item}
+          } 
+          
+
+          {/* print the item from the object */}
+           {item.item}
             </li>
         ))}
       </ul>
       <button type="button" className="btn btn-primary">Button</button>
-      </div>
     </div>
+
   );
 }
